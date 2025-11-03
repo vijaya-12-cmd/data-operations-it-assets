@@ -1,0 +1,1 @@
+As per the insights we found Around 40% of assets are under categoty of EOL and EOS These assets needs to migrate or upgrade as soon as possible
