@@ -11,24 +11,52 @@ Developed python code(index_data.py) for uploading cleaned data to elastic searc
 
 phase 3: 
 
-1. Reindex data to another index 
-2. Add a derived field: 
+Step:1 
+Reindex data to another index and checked in elastic search
+Query in elastic for confirmation of reindexed
+GET /mini_project_transformed/_search
+
+step:2  Added a derived field: 
 o risk_level = "High" if operating_system_lifecycle_status is "EOL" 
 or "EOS", 
 else "Low". 
-3. Calculate system age (in years) from the installation date. 
-4. Delete records that have missing hostnames or Unknown providers. 
-5. Update existing records with the new fields using _update_by_query. 
+**test Query:**
+
+  "_source": ["hostname", "operating_system_lifecycle_status", "risk_level"],
+  "query": {
+    "exists": {
+      "field": "risk_level"
+    }
+  },
+  "size": 10
+}
+
+step: 3
+Calculated system age (in years) from the installation date.
+Test Query
+POST mini_project_transformed/_search
+{
+  "_source": ["hostname", "operating_system_installation_date", "system_age"],
+  "query": {
+    "exists": {
+      "field": "system_age"
+    }
+  },
+  "size": 10
+}
+
+   
+5. Delete records that have missing hostnames or Unknown providers. 
+6. Update existing records with the new fields using _update_by_query. 
 
 phase 4:
 
  Export or view data in Kibana. 
-2. Create charts such as: 
+2. Created charts such as: 
 o Assets by Country 
 o Lifecycle Status Distribution 
 o High vs Low Risk Assets 
 o Top OS Providers 
-3. Save screenshots of your dashboards in a folder: 
-visualization_screenshots/ 
-4. Write short business insights — e.g.: 
-“40% of assets are EOL — indicating an urgent need for OS upgrades
+3. Saved screenshots of my dashboards in a folder: 
+datavisualization/ 
+given final report with suggesstion of upgrade or migrate OS for EOS and EOL
